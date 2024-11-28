@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Entidades e Relacionamentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap Bundle com JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Entidades e Relacionamentos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Opções de Visualização</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home(tipo='acomodacao')}">Acomodação</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home(tipo='hospede')}">Hóspede</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home(tipo='reserva')}">Reserva</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <body>
+    <h2 style="margin-top: 80px; font-family: 'Roboto', sans-serif;">
+        <span style="font-weight: 400;" th:utext="${titulo != null ? #strings.substringBefore(titulo, '-') : 'Título padrão'}"></span>
+        <span style="font-weight: 700;" th:utext="${titulo != null ? #strings.substringAfter(titulo, '-') : ''}"></span>
+    </h2>
+    </body>
+    <a th:href="@{'/formulario/cadastro?tipo=' + ${tipo}}" class="btn btn-outline-dark">Cadastrar</a>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th th:each="coluna : ${colunas}" th:text="${coluna}"></th>
+            <th >Ações</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="linha : ${dados}">
+            <td th:each="valor : ${linha.values()}" th:text="${valor}"></td>
+
+            <td>
+                <a th:href="@{/formulario/edicao/{numeroAcomodacao}/{cnpjHotel}(numeroAcomodacao=${linha['Nº Acomodação']}, cnpjHotel=${linha['CNPJ']})}"
+                   class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+
+                <a href="#" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+        <nav style="margin-top: 80px;" aria-label="...">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </table>
+</div>
+</body>
+</html>
