@@ -12,83 +12,100 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar bg-light fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Entidades e Relacionamentos</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Opções de Visualização</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/home(tipo='acomodacao')}">Acomodação</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/home(tipo='hospede')}">Hóspede</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/home(tipo='reserva')}">Reserva</a>
-                        </li>
-                    </ul>
+
+    <div class="container">
+        <nav class="navbar fixed-top" style="background-color: #4066b8; color: white;">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="#">Entidades e Relacionamentos</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header" style="background-color: #4066b8; color: white;">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Opções de Visualização</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="filter: invert(1);"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-grey" th:href="@{/home(tipo='acomodacao')}">Acomodação</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-grey" th:href="@{/home(tipo='hospede')}">Hóspede</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-grey" th:href="@{/home(tipo='hotel')}">Hotel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-grey" th:href="@{/home(tipo='reserva')}">Reserva</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-    <body>
-    <h2 style="margin-top: 80px; font-family: 'Roboto', sans-serif;">
-        <span style="font-weight: 400;" th:utext="${titulo != null ? #strings.substringBefore(titulo, '-') : 'Título padrão'}"></span>
-        <span style="font-weight: 700;" th:utext="${titulo != null ? #strings.substringAfter(titulo, '-') : ''}"></span>
-    </h2>
-    </body>
-    <a th:href="@{'/formulario/cadastro?tipo=' + ${tipo}}" class="btn btn-outline-dark">Cadastrar</a>
+        </nav>
 
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th th:each="coluna : ${colunas}" th:text="${coluna}"></th>
-            <th >Ações</th>
-        </tr>
-        </thead>
+        <h2 style="margin-top: 80px; font-family: 'Roboto', sans-serif; color: #4F4F4F;">
+            <span style="font-weight: 600;" th:utext="${titulo != null ? titulo : 'Título padrão'}"></span>
+        </h2>
 
-        <tbody>
-        <tr th:each="linha : ${dados}">
-            <td th:each="valor : ${linha.values()}" th:text="${valor}"></td>
 
-            <td>
-                <a th:href="@{/formulario/edicao/{numeroAcomodacao}/{cnpjHotel}(numeroAcomodacao=${linha['Nº Acomodação']}, cnpjHotel=${linha['CNPJ']})}"
-                   class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
+        <a th:href="@{'/formulario/cadastro?tipo=' + ${tipo}}" class="btn btn-outline-dark">Cadastrar</a>
 
-                <a href="#" class="btn btn-outline-danger btn-sm">
-                    <i class="bi bi-trash"></i>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-        <nav style="margin-top: 80px;" aria-label="...">
+        <!-- Tabela -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:each="coluna : ${colunas}" th:text="${coluna}" style="color: #4F4F4F;"></th>
+                <th style="color: #4F4F4F;">Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="linha : ${dados}">
+                <td th:each="valor, stat : ${linha.values()}"
+                    th:if="${stat.index != 0}"
+                    th:text="${valor}"></td>
+                <td class="d-flex gap-2">
+                    <a th:href="@{/formulario/edicao/{id}(id=${linha['id']}, tipo=${tipo})}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <a th:href="@{/excluir/{id}?(id=${linha['id']}, tipo=${tipo})}" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Navegação -->
+        <nav style="margin-top: 30px;" class="d-flex justify-content-center" aria-label="Pagination">
             <ul class="pagination">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                <!-- Botão "Previous" -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a th:href="@{/home(tipo=${tipo}, page=${currentPage - 1}, size=6)}" class="page-link" style="color: #4F4F4F;">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
+
+                <!-- Botões de Páginas -->
+                <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
+                    class="page-item"
+                    th:classappend="${pageNum == currentPage} ? 'active'">
+                    <a th:href="@{/home(tipo=${tipo}, page=${pageNum}, size=6)}"
+                       class="page-link"
+                       th:text="${pageNum + 1}"
+                       style="color: #4F4F4F;"></a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+
+                <!-- Botão "Next" -->
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                    <a th:href="@{/home(tipo=${tipo}, page=${currentPage + 1}, size=6)}" class="page-link" style="color: #4F4F4F;">Next</a>
                 </li>
             </ul>
         </nav>
-    </table>
+
+    </div>
 </div>
+
 </body>
 </html>

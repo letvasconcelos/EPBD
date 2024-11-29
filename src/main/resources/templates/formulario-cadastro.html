@@ -11,29 +11,32 @@
     <h2>Formulário de Cadastro - <span th:text="${tipo}"></span></h2>
     <form th:action="@{'/cadastrar?tipo=' + ${tipo}}" th:object="${entidade}" method="post">
     <!-- Acomodação -->
-        <div th:if="${tipo == 'acomodacao'}">
-            <div class="mb-3">
-                <input class="form-control" type="text" name="numeroAcomodacao" placeholder="Número Acomodação">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="text" name="cnpjHotel" placeholder="CNPJ Hotel">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="text" name="politicaDeUso" placeholder="Política de Uso">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="number" name="capacidade" placeholder="Capacidade">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="datetime-local" name="ultimaLimpeza" placeholder="Última Limpeza">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="text" name="precoBase" placeholder="Preço Base">
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="text" name="tipoAcomodacao" placeholder="Tipo">
-            </div>
+    <div th:if="${tipo == 'acomodacao'}">
+        <div class="mb-3">
+            <input class="form-control" type="text" name="numeroAcomodacao" placeholder="Número Acomodação">
         </div>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="cnpjHotel" placeholder="CNPJ Hotel">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="politicaDeUso" placeholder="Política de Uso">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="number" name="capacidade" placeholder="Capacidade">
+        </div>
+        <div class="mb-3">
+            <p>Última Limpeza</p>
+            <input class="form-control" type="datetime-local" name="ultimaLimpeza" placeholder="Última Limpeza">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="precoBase" placeholder="Preço Base">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="tipoAcomodacao" placeholder="Tipo">
+        </div>
+
+    </div>
+
 
         <!-- Hóspede -->
         <div th:if="${tipo == 'hospede'}">
@@ -43,7 +46,73 @@
             <div class="mb-3">
                 <input class="form-control" type="number" name="pontosAcumulados" placeholder="Pontos Acumulados">
             </div>
+            <!-- Campos adicionais da entidade Pessoa -->
+            <div class="mb-3">
+                <input class="form-control" type="text" name="nome" placeholder="Nome">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="genero" placeholder="Gênero">
+            </div>
+            <div class="mb-3">
+                <p>Data de nascimento</p>
+                <input class="form-control" type="datetime-local" name="dataNascimento" placeholder="Data de Nascimento">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="email" name="email" placeholder="E-mail">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="telefone" placeholder="Telefone">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="email" name="emailReserva" placeholder="E-mail Reserva">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="telefoneEmergencia" placeholder="Telefone de Emergência">
+            </div>
         </div>
+
+
+        <!-- Hotel -->
+        <div th:if="${tipo == 'hotel'}">
+            <div class="mb-3">
+                <input class="form-control" type="text" name="cnpj" placeholder="CNPJ">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="categoria" placeholder="Categoria">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="capacidade" placeholder="Capacidade Máxima de Hóspedes">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="idSetor" placeholder="ID do Setor">
+            </div>
+            <!-- Campos de Unidade adicionados a mais -->
+            <div class="mb-3">
+                <input class="form-control" type="number" name="numero" placeholder="Número">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="rua" placeholder="Rua">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="bairro" placeholder="Bairro">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="cep" placeholder="CEP">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="estado" placeholder="Estado">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="nomeFantasia" placeholder="Nome Fantasia">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="registroImobiliario" placeholder="Registro Imobiliário">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="nomeEmpresa" placeholder="Nome da Empresa">
+            </div>
+        </div>
+
 
         <!-- Reserva -->
         <div th:if="${tipo == 'reserva'}">
@@ -51,9 +120,11 @@
                 <input class="form-control" type="text" name="idReserva" placeholder="ID Reserva">
             </div>
             <div class="mb-3">
+                <p>Data início</p>
                 <input class="form-control" type="datetime-local" name="dataInicio" placeholder="Data Início">
             </div>
             <div class="mb-3">
+                <p>Data fim</p>
                 <input class="form-control" type="datetime-local" name="dataFim" placeholder="Data Fim">
             </div>
             <div class="mb-3">
@@ -67,6 +138,9 @@
             </div>
             <div class="mb-3">
                 <input class="form-control" type="text" name="numeroAcomodacao" placeholder="Número Acomodação">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="text" name="cnpjHotel" placeholder="CNPJ Hotel">
             </div>
             <div class="mb-3">
                 <input class="form-control" type="text" name="cpfHospede" placeholder="CPF Hóspede">
