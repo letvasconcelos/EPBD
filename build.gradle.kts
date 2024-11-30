@@ -1,6 +1,7 @@
 plugins {
     id("org.springframework.boot") version "3.1.6"
     id("io.spring.dependency-management") version "1.1.3"
+    id("org.beryx.jlink") version "2.25.0"
     kotlin("jvm") version "1.9.0"
     kotlin("plugin.spring") version "1.9.0"
     kotlin("plugin.jpa") version "1.9.0"
@@ -32,8 +33,22 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "17" // Define o target da JVM
     }
-    tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-        archiveFileName.set("EPBD.jar") // Nome final do arquivo JAR
+}
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+    archiveFileName.set("EPBD.jar") // Nome final do arquivo JAR
+}
+
+jlink {
+    addOptions("--add-modules", "ALL-MODULE-PATH") // Inclui todos os módulos automaticamente
+
+    launcher {
+        name = "EPBD" // Nome do executável gerado
     }
 
+    jpackage {
+        installerType = "exe" // Define o tipo do instalador
+        appVersion = "1.0.0" // Versão do aplicativo
+        mainClass = "controller.ApplicationKt" // Classe principal com @SpringBootApplication
+    }
 }
